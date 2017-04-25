@@ -4,10 +4,12 @@ wuff {
   // def eclipseMirror = 'http://mirror.switch.ch'
   
   def eclipseMirror = 'http://www.eclipse.org/downloads/download.php?file='
-  
-  def eclipseArchiveMirror = 'http://www.eclipse.org/downloads/download.php?file='
+
+  // use same access method as with the mirror
+  // def eclipseArchiveMirror = 'http://www.eclipse.org/downloads/download.php?file='
+
   // old access path:
-  // def eclipseArchiveMirror = 'http://archive.eclipse.org'
+  def eclipseArchiveMirror = 'http://archive.eclipse.org'
 
   wuffDir = new File(System.getProperty('user.home'), '.wuff')
 
@@ -219,32 +221,31 @@ wuff {
     eclipseMavenGroup = 'eclipse-indigo-sr2'
 
     sources {
-
       source "${eclipseMirror}/eclipse//technology/epp/downloads/release/indigo/SR2/eclipse-jee-indigo-SR2-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}"
       source "${eclipseArchiveMirror}/eclipse/downloads/drops/R-3.7.2-201202080800/eclipse-SDK-3.7.2-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}", sourcesOnly: true
       source "${eclipseArchiveMirror}/eclipse/downloads/drops/R-3.7.2-201202080800/eclipse-3.7.2-delta-pack.zip"
 
-      languagePackTemplate '${eclipseMirror}/eclipse//technology/babel/babel_language_packs/R0.11.1/indigo/BabelLanguagePack-eclipse-${language}_3.7.0.v20131123061707.zip'
-      languagePackTemplate '${eclipseMirror}/eclipse//technology/babel/babel_language_packs/R0.11.1/indigo/BabelLanguagePack-rt.equinox-${language}_3.7.0.v20131123061707.zip'
+      languagePackTemplate '${eclipseMirror}/eclipse/technology/babel/babel_language_packs/R0.11.1/indigo/BabelLanguagePack-eclipse-${language}_3.7.0.v20131123061707.zip'
+      languagePackTemplate '${eclipseMirror}/eclipse/technology/babel/babel_language_packs/R0.11.1/indigo/BabelLanguagePack-rt.equinox-${language}_3.7.0.v20131123061707.zip'
     }
   }
   
   eclipseVersion('3.8.0') {
-		
-			extendsFrom '3.7.2'
 
-			eclipseMavenGroup = 'eclipse-juno'
-					
-			sources {
-				source "${eclipseArchiveMirror}/technology/epp/downloads/release/juno/R/eclipse-jee-juno-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}"				
-				source "${eclipseArchiveMirror}/eclipse/downloads/drops/R-3.8-201206081200/eclipse-SDK-3.8-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}", sourcesOnly: true
-				source "${eclipseArchiveMirror}/eclipse/downloads/drops/R-3.8-201206081200/eclipse-3.8-delta-pack.zip"
+    extendsFrom '3.7.2'
 
-				//languagePackTemplate '${eclipseMirror}/eclipse//technology/babel/babel_language_packs/R0.11.1/indigo/BabelLanguagePack-eclipse-${language}_3.7.0.v20131123061707.zip'
-				//languagePackTemplate '${eclipseMirror}/eclipse//technology/babel/babel_language_packs/R0.11.1/indigo/BabelLanguagePack-rt.equinox-${language}_3.7.0.v20131123061707.zip'
-			}
-		}
+	eclipseMavenGroup = 'eclipse-juno'
+	
+	sources {
+  	  source "${eclipseMirror}/technology/epp/downloads/release/juno/R/eclipse-jee-juno-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}"
+	  source "${eclipseMirror}/eclipse/downloads/drops/R-3.8-201206081200/eclipse-SDK-3.8-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}", sourcesOnly: true
+	  source "${eclipseArchiveMirror}/eclipse/downloads/drops/R-3.8-201206081200/eclipse-3.8-delta-pack.zip"
 
+	  languagePackTemplate '${eclipseMirror}/eclipse/technology/babel/babel_language_packs/R0.11.1/indigo/BabelLanguagePack-eclipse-${language}_3.7.0.v20131123061707.zip'
+	  languagePackTemplate '${eclipseMirror}/eclipse/technology/babel/babel_language_packs/R0.11.1/indigo/BabelLanguagePack-rt.equinox-${language}_3.7.0.v20131123061707.zip'
+	}
+  }
+	
   eclipseVersion('4.2.1') {
 
     extendsFrom '3.7.2'
