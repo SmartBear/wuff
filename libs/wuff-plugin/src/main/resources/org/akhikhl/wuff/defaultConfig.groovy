@@ -397,9 +397,6 @@ wuff {
     extendsFrom '4.4'
 
     eclipseMavenGroup = 'eclipse-luna-sr2'
-
-	// not available on all mirrors, but here:
-	eclipseMirror = 'http://mirror.switch.ch'
 	
     sources {
 
