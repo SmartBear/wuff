@@ -335,6 +335,18 @@ class OsgiBundleConfigurer extends JavaConfigurer {
       }
     }
   }
+  
+  public static String findSuperClassParameterType(Object instance, Class<?> classOfInterest, int parameterIndex) {
+	Class<?> subClass = instance.getClass().getSuperclass();
+/*	  while (subClass != subClass.getSuperclass()) {
+		println(subClass);
+		// instance.getClass() is no subclass of classOfInterest or instance is a direct instance of classOfInterest
+		subClass = subClass.getSuperclass();
+		if (subClass == null) throw new IllegalArgumentException();
+	  }*/
+	  java.lang.reflect.ParameterizedType parameterizedType = (java.lang.reflect.ParameterizedType) subClass.getGenericSuperclass();
+	return parameterizedType.getActualTypeArguments()[parameterIndex].getGenericDeclaration();
+  }
 
   @Override
   protected void createConfigurations() {	
@@ -343,8 +355,11 @@ class OsgiBundleConfigurer extends JavaConfigurer {
       Configuration configuration = project.configurations.create('publicLib')
       project.sourceSets.each { it.compileClasspath.plus(configuration) }
 
-      if (project.plugins.hasPlugin('idea'))
-        project.idea.module.scopes.COMPILE.plus(configuration)
+      if (project.plugins.hasPlugin('idea')) {
+        //project.idea.module.scopes.COMPILE.plus(configuration)
+		project.warn("wuff plugin for idea: ignoring configuration " + configuration.name)
+		project.debug("configuration dump " + configuration.dump())
+	  }
 
       if (project.plugins.hasPlugin('eclipse'))
         project.eclipse.classpath.plusConfigurations.plus(configuration)
@@ -353,8 +368,11 @@ class OsgiBundleConfigurer extends JavaConfigurer {
       Configuration configuration = project.configurations.create('privateLib')
       project.sourceSets.each { it.compileClasspath.plus(configuration) }
 
-      if (project.plugins.hasPlugin('idea'))
-        project.idea.module.scopes.COMPILE.plus(configuration)
+      if (project.plugins.hasPlugin('idea')) {
+        // project.idea.module.scopes.COMPILE.plus(configuration)
+	    project.warn("wuff plugin for idea: ignoring configuration " + configuration.name)
+		project.debug("configuration dump " + configuration.dump())
+	  }
 
       if (project.plugins.hasPlugin('eclipse'))
         project.eclipse.classpath.plusConfigurations.plus(configuration)
