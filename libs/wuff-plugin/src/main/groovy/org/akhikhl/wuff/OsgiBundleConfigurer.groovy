@@ -357,8 +357,8 @@ class OsgiBundleConfigurer extends JavaConfigurer {
 
       if (project.plugins.hasPlugin('idea')) {
         //project.idea.module.scopes.COMPILE.plus(configuration)
-		project.warn("wuff plugin for idea: ignoring configuration " + configuration.name)
-		project.debug("configuration dump " + configuration.dump())
+		project.logger.warn("wuff plugin for idea: ignoring configuration " + configuration.name)
+		project.logger.debug("configuration dump " + configuration.dump())
 	  }
 
       if (project.plugins.hasPlugin('eclipse'))
@@ -370,8 +370,8 @@ class OsgiBundleConfigurer extends JavaConfigurer {
 
       if (project.plugins.hasPlugin('idea')) {
         // project.idea.module.scopes.COMPILE.plus(configuration)
-	    project.warn("wuff plugin for idea: ignoring configuration " + configuration.name)
-		project.debug("configuration dump " + configuration.dump())
+	    project.logger.warn("wuff plugin for idea: ignoring configuration " + configuration.name)
+		project.logger.debug("configuration dump " + configuration.dump())
 	  }
 
       if (project.plugins.hasPlugin('eclipse'))
