@@ -336,18 +336,6 @@ class OsgiBundleConfigurer extends JavaConfigurer {
     }
   }
   
-  public static String findSuperClassParameterType(Object instance, Class<?> classOfInterest, int parameterIndex) {
-	Class<?> subClass = instance.getClass().getSuperclass();
-/*	  while (subClass != subClass.getSuperclass()) {
-		println(subClass);
-		// instance.getClass() is no subclass of classOfInterest or instance is a direct instance of classOfInterest
-		subClass = subClass.getSuperclass();
-		if (subClass == null) throw new IllegalArgumentException();
-	  }*/
-	  java.lang.reflect.ParameterizedType parameterizedType = (java.lang.reflect.ParameterizedType) subClass.getGenericSuperclass();
-	return parameterizedType.getActualTypeArguments()[parameterIndex].getGenericDeclaration();
-  }
-
   @Override
   protected void createConfigurations() {	
     super.createConfigurations()
