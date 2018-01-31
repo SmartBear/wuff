@@ -26,7 +26,7 @@ if( !hasProperty( 'bintrayUser' ) )
 if( !hasProperty( 'bintrayKey' ) )
   ext.bintrayKey = ''
 
-task('build')
+//task('build')
 
 // we exclude buildExamples from main build,
 // because building all examples might be too slow
