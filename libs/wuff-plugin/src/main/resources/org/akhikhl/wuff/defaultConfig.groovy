@@ -3,7 +3,8 @@ wuff {
   // select you mirror
   // def eclipseMirror = 'http://mirror.switch.ch'
   
-  def eclipseMirror = 'http://www.eclipse.org/downloads/download.php?file='
+  // eclipseMirror = 'http://www.eclipse.org/downloads/download.php?file='
+  def eclipseMirror = 'http://mirror.dkm.cz/'
 
   // use same access method as with the mirror
   // def eclipseArchiveMirror = 'http://www.eclipse.org/downloads/download.php?file='
@@ -31,8 +32,8 @@ wuff {
       source "${eclipseArchiveMirror}/eclipse/downloads/drops/R-3.7.1-201109091335/eclipse-SDK-3.7.1-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}", sourcesOnly: true
       source "${eclipseArchiveMirror}/eclipse/downloads/drops/R-3.7.1-201109091335/eclipse-3.7.1-delta-pack.zip"
 
-      languagePackTemplate '${eclipseMirror}/eclipse//technology/babel/babel_language_packs/R0.11.1/indigo/BabelLanguagePack-eclipse-${language}_3.7.0.v20131123061707.zip'
-      languagePackTemplate '${eclipseMirror}/eclipse//technology/babel/babel_language_packs/R0.11.1/indigo/BabelLanguagePack-rt.equinox-${language}_3.7.0.v20131123061707.zip'
+      languagePackTemplate '${eclipseMirror}/eclipse/technology/babel/babel_language_packs/R0.11.1/indigo/BabelLanguagePack-eclipse-${language}_3.7.0.v20131123061707.zip'
+      languagePackTemplate '${eclipseMirror}/eclipse/technology/babel/babel_language_packs/R0.11.1/indigo/BabelLanguagePack-rt.equinox-${language}_3.7.0.v20131123061707.zip'
     }
 
     swtlib {
@@ -389,7 +390,7 @@ wuff {
       source "${eclipseArchiveMirror}/eclipse/downloads/drops4/R-4.4.1-201409250400/eclipse-SDK-4.4.1-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}", sourcesOnly: true
       source "${eclipseArchiveMirror}/eclipse/downloads/drops4/R-4.4.1-201409250400/eclipse-4.4.1-delta-pack.zip"
 
-      languagePackTemplate '${eclipseMirror}/eclipse//technology/babel/babel_language_packs/R0.12.1/luna/BabelLanguagePack-eclipse-${language}_4.4.0.v20141223043836.zip'
+      languagePackTemplate '${eclipseMirror}/eclipse/technology/babel/babel_language_packs/R0.12.1/luna/BabelLanguagePack-eclipse-${language}_4.4.0.v20141223043836.zip'
     }
   }
   
@@ -404,7 +405,7 @@ wuff {
       source "${eclipseArchiveMirror}/eclipse/downloads/drops4/R-4.4.2-201502041700/eclipse-SDK-4.4.2-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}", sourcesOnly: true
       source "${eclipseArchiveMirror}/eclipse/downloads/drops4/R-4.4.2-201502041700/eclipse-4.4.2-delta-pack.zip"
 
-      languagePackTemplate '${eclipseMirror}/eclipse//technology/babel/babel_language_packs/R0.12.1/luna/BabelLanguagePack-eclipse-${language}_4.4.0.v20141223043836.zip'
+      languagePackTemplate '${eclipseMirror}/eclipse/technology/babel/babel_language_packs/R0.12.1/luna/BabelLanguagePack-eclipse-${language}_4.4.0.v20141223043836.zip'
     }
   }
   
@@ -416,10 +417,10 @@ wuff {
 
     sources {
 
-      source "${eclipseMirror}/eclipse//technology/epp/downloads/release/mars/R/eclipse-jee-mars-R-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}"
+      source "${eclipseMirror}/eclipse/technology/epp/downloads/release/mars/R/eclipse-jee-mars-R-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}"
       source "${eclipseArchiveMirror}/eclipse/downloads/drops4/R-4.5-201506032000/eclipse-SDK-4.5-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}", sourcesOnly: true
 
-      languagePackTemplate '${eclipseMirror}/eclipse//technology/babel/babel_language_packs/R0.13.0/mars/BabelLanguagePack-eclipse-${language}_4.5.0.v20150804081228.zip'
+      languagePackTemplate '${eclipseMirror}/eclipse/technology/babel/babel_language_packs/R0.13.0/mars/BabelLanguagePack-eclipse-${language}_4.5.0.v20150804081228.zip'
     }
   }  
 
