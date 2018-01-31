@@ -74,8 +74,9 @@ class OsgiBundleConfigurer extends JavaConfigurer {
         bundleName = bundle
       addBundle bundleName, bundleVersion
     }
-    def pluginXml = project.pluginXml
-    if(pluginXml) {
+
+    if (project.hasProperty('pluginXml') && project.pluginXml) {
+      def pluginXml = project.pluginXml
       if(pluginXml.extension.find { it.'@point'.startsWith 'org.eclipse.ui.views' }) {
         addBundle 'org.eclipse.ui.views'
       }
@@ -83,7 +84,7 @@ class OsgiBundleConfigurer extends JavaConfigurer {
         addBundle 'org.eclipse.core.expressions'
       }
     }
-  }
+	}
 
   @Override
   protected void createSourceSets() {
@@ -122,9 +123,16 @@ class OsgiBundleConfigurer extends JavaConfigurer {
       doLast {
         // workaround for OsgiManifest bug: it fails, when classesDir does not exist,
         // i.e. when the project contains no java/groovy classes (resources-only project)
-        project.sourceSets.main.output.classesDir.mkdirs()
+		// gradle 4.x API
+        project.sourceSets.main.java.outputDir.mkdirs()
+		
         generatedManifestFile.parentFile.mkdirs()
-        generatedManifestFile.withWriter { createManifest().writeTo it }
+		project.logger.warn('now writing manifest to ' + generatedManifestFile.getAbsolutePath())
+		def manifest = createManifest()
+        project.logger.warn('manifest is ' + manifest)
+		manifest.read(generatedManifestFile)
+		manifest.writeTo(generatedManifestFile)
+        //generatedManifestFile.withWriter { manifest.writeTo it }
       }
     }
   } // configureTask_createOsgiManifest
@@ -369,18 +377,21 @@ class OsgiBundleConfigurer extends JavaConfigurer {
 
   @Override
   protected void createExtraFiles() {
-    super.createExtraFiles()
+    super.createExtraFiles()	
     FileUtils.stringToFile(getPluginXmlString(), PluginUtils.getExtraPluginXmlFile(project))
     FileUtils.stringToFile(getPluginCustomizationString(), PluginUtils.getExtraPluginCustomizationFile(project))
   }
 
   protected Manifest createManifest() {
-
+    println("project is " + project)
     def m = project.osgiManifest {
       setName project.name
       setVersion project.version.replace('-SNAPSHOT', snapshotQualifier)
-      setClassesDir project.sourceSets.main.output.classesDir
+	  // just use java classes, gradle 4.x API
+      setClassesDir project.sourceSets.main.java.outputDir
       setClasspath(project.configurations.runtime - project.configurations.privateLib)
+	  def resolver = project.getFileResolver()
+      assert resolver != null
     }
 
     m = m.effectiveManifest
@@ -391,7 +402,7 @@ class OsgiBundleConfigurer extends JavaConfigurer {
       m.attributes['Bundle-ActivationPolicy'] = 'lazy'
     }
 
-    def pluginXml = project.pluginXml
+    def pluginXml = project.hasProperty('pluginXml') ? project.pluginXml : null
     if(pluginXml) {
       m.attributes['Bundle-SymbolicName'] = project.bundleSymbolicName + '; singleton:=true'
       Map importPackages = PluginUtils.findImportPackagesInPluginConfigFile(project, pluginXml).collectEntries { [ it, '' ] }
@@ -465,13 +476,13 @@ class OsgiBundleConfigurer extends JavaConfigurer {
   protected void createPluginCustomization() {
     def m = [:]
     def existingFile = PluginUtils.findPluginCustomizationFile(project)
-    if(existingFile) {
+    if (existingFile) {
       def props = new PropertiesConfiguration()
       props.load(existingFile)
       for(def key in props.getKeys())
       m[key] = props.getProperty(key)
-    }
-    populatePluginCustomization(m)
+    }	
+    populatePluginCustomization(m)	
     project.ext.pluginCustomization = m.isEmpty() ? null : m
   }
 
@@ -511,8 +522,16 @@ class OsgiBundleConfigurer extends JavaConfigurer {
   @Override
   protected Map getExtraFilesProperties() {
     Map result = [:]
-    result.pluginXml = getPluginXmlString()
-    result.pluginCustomization = getPluginCustomizationString()
+	def pluginXmlContent = getPluginXmlString()
+	if (pluginXmlContent) {
+		// add if not null
+		result.pluginXml = pluginXmlContent
+	}
+	def getPluginCustomizationString = getPluginCustomizationString()
+	if (getPluginCustomizationString) {
+		// add if not null
+		result.pluginCustomization = getPluginCustomizationString
+	}
     return result
   }
 
@@ -522,7 +541,7 @@ class OsgiBundleConfigurer extends JavaConfigurer {
   }
 
   protected final String getPluginCustomizationString() {
-    if(project.hasProperty('pluginCustomization') && project.pluginCustomization != null) {
+      if(project.hasProperty('pluginCustomization') && project.pluginCustomization != null) {
       def props = new PropertiesConfiguration()
       project.pluginCustomization.each { key, value ->
         props.setProperty(key, value)
@@ -531,7 +550,7 @@ class OsgiBundleConfigurer extends JavaConfigurer {
       props.save(writer)
       return writer.toString()
     }
-    return null
+	return null
   }
 
   protected final String getPluginXmlString() {

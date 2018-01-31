@@ -137,15 +137,15 @@ class EclipseRcpAppConfigurer extends EquinoxAppConfigurer {
 
   protected void populatePluginIntroXml(MarkupBuilder pluginIntroXml, Node existingPluginIntroXml, String language) {
     File introFile = PluginUtils.findPluginIntroHtmlFile(project, language)
-    if(introFile) {
+    if (introFile && project.hasProperty('pluginXml')) {
       String homePageId = project.pluginXml?.extension?.find({ it.'@point' == 'org.eclipse.ui.intro.config' })?.config?.presentation?.'@home-page-id'?.text()
-      if(homePageId && !existingPluginIntroXml?.page.find { it.'@id' == homePageId })
+      if (homePageId && !existingPluginIntroXml?.page.find { it.'@id' == homePageId })
         pluginIntroXml.page id: homePageId, url: introFile.name
     }
   }
 
   protected void populatePluginCustomization(Map props) {
-    if(!props.containsKey('org.eclipse.ui/defaultPerspectiveId')) {
+    if(!props.containsKey('org.eclipse.ui/defaultPerspectiveId') && project.hasProperty('pluginXml')) {
       List perspectiveIds = project.pluginXml?.extension.find({ it.'@point' == 'org.eclipse.ui.perspectives' })?.perspective?.collect { it.'@id' }
       if(perspectiveIds?.size() == 1)
         props['org.eclipse.ui/defaultPerspectiveId'] = perspectiveIds[0]
