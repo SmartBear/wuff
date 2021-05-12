@@ -1,14 +1,5 @@
 wuff {
-
-  // select you mirror
-  // def eclipseMirror = 'http://mirror.switch.ch'
-  
-  def eclipseMirror = 'http://www.eclipse.org/downloads/download.php?file='
-  
-  def eclipseArchiveMirror = 'http://www.eclipse.org/downloads/download.php?file='
-  // old access path:
-  // def eclipseArchiveMirror = 'http://archive.eclipse.org'
-
+    
   wuffDir = new File(System.getProperty('user.home'), '.wuff')
 
   localMavenRepositoryDir = new File(wuffDir, 'm2_repository')
@@ -87,16 +78,17 @@ wuff {
 
       project.dependencies {
         compile "${eclipseMavenGroup}:org.eclipse.core.runtime:+"
-        runtime "${eclipseMavenGroup}:org.eclipse.core.runtime.compatibility.registry:+"
+        //runtime "${eclipseMavenGroup}:org.eclipse.core.runtime.compatibility.registry:+"
         compile "${eclipseMavenGroup}:org.eclipse.equinox.app:+"
-        runtime "${eclipseMavenGroup}:org.eclipse.equinox.ds:+"
+        //runtime "${eclipseMavenGroup}:org.eclipse.equinox.ds:+"
         runtime "${eclipseMavenGroup}:org.eclipse.equinox.event:+"
         runtime "${eclipseMavenGroup}:org.eclipse.equinox.launcher:+"
         compile "${eclipseMavenGroup}:org.eclipse.equinox.launcher.${current_os_suffix}${current_arch_suffix}:+"
-        runtime "${eclipseMavenGroup}:org.eclipse.equinox.util:+"
+        //runtime "${eclipseMavenGroup}:org.eclipse.equinox.util:+"
         runtime "${eclipseMavenGroup}:org.eclipse.osgi.services:+"
         runtime "${eclipseMavenGroup}:com.ibm.icu:+"
-        runtime "${eclipseMavenGroup}:javax.xml:+"
+        //runtime "${eclipseMavenGroup}:javax.xml:+"
+        //runtime "${eclipseMavenGroup}:org.eclipse.equinox.simpleconfigurator:+"
       }
 
       supported_oses.each { platform ->
@@ -414,18 +406,93 @@ wuff {
     
     extendsFrom '4.4.2'
 
+    eclipseMirror = 'http://mirror.netcologne.de'
+    eclipseArchiveMirror = 'http://archive.eclipse.org'
+
     eclipseMavenGroup = 'eclipse-mars'
 
     sources {
 
       source "${eclipseMirror}/eclipse//technology/epp/downloads/release/mars/R/eclipse-jee-mars-R-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}"
-      source "${eclipseArchiveMirror}/eclipse/downloads/drops4/R-4.5-201506032000/eclipse-SDK-4.5-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}", sourcesOnly: true
+      source "${eclipseMirror}/eclipse/eclipse/downloads/drops4/R-4.5-201506032000/eclipse-SDK-4.5-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}", sourcesOnly: true
 
       languagePackTemplate '${eclipseMirror}/eclipse//technology/babel/babel_language_packs/R0.13.0/mars/BabelLanguagePack-eclipse-${language}_4.5.0.v20150804081228.zip'
     }
-  }  
+  }
 
-  eclipseVersion('efxclipse-1.2') {
+    eclipseVersion('4.6') {
+
+        extendsFrom '4.5'
+
+        eclipseMavenGroup = 'eclipse-neon'
+
+        sources {
+
+            source "${eclipseMirror}/eclipse//technology/epp/downloads/release/neon/3/eclipse-jee-neon-3-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}"
+            source "${eclipseMirror}/eclipse/eclipse/downloads/drops4/R-4.6.3-201703010400/eclipse-SDK-4.6.3-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}", sourcesOnly: true
+            languagePackTemplate '${eclipseMirror}/eclipse//technology/babel/babel_language_packs/R0.13.0/mars/BabelLanguagePack-eclipse-${language}_4.5.0.v20150804081228.zip'
+
+        }
+    }
+
+    eclipseVersion('4.7') {
+
+        extendsFrom '4.6'
+
+        eclipseMavenGroup = 'eclipse-4-7'
+
+        sources {
+            //source "${eclipseMirror}/eclipse/eclipse/downloads/drops4/R-4.7/eclipse-SDK-4.7-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}", sourcesOnly: true
+            source "${eclipseMirror}/eclipse/eclipse/downloads/drops4/R-4.7/org.eclipse.platform-4.7.zip"
+        }
+    }
+
+    eclipseVersion('4.8') {
+
+        extendsFrom '4.7'
+
+        eclipseMavenGroup = 'eclipse-4-8'
+
+        sources {
+            //source "${eclipseMirror}/eclipse/eclipse/downloads/drops4/R-4.7/eclipse-SDK-4.7-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}", sourcesOnly: true
+            source "${eclipseMirror}/eclipse/eclipse/downloads/drops4/R-4.8/org.eclipse.platform-4.8.zip"
+        }
+    }
+
+    eclipseVersion('4.9') {
+
+        extendsFrom '4.8'
+
+        eclipseMavenGroup = 'eclipse-4-9'
+
+        sources {
+            source "${eclipseMirror}/eclipse/eclipse/downloads/drops4/R-4.9/org.eclipse.platform-4.9.zip"
+        }
+    }
+
+    eclipseVersion('4.10') {
+
+        extendsFrom '4.7'
+
+        eclipseMavenGroup = 'eclipse-4-10'
+
+        sources {
+            source "${eclipseMirror}/eclipse/eclipse/downloads/drops4/R-4.10/org.eclipse.platform-4.10.zip"
+        }
+    }
+
+    eclipseVersion('4.16') {
+
+        extendsFrom '4.10'
+
+        eclipseMavenGroup = 'eclipse-4-16'
+
+        sources {
+            source "${eclipseMirror}/eclipse/eclipse/downloads/drops4/R-4.16/org.eclipse.platform-4.16.zip"
+        }
+    }
+
+    eclipseVersion('efxclipse-1.2') {
       eclipseMavenGroup = 'efxclipse-1_2'
       sources {
           source "http://download.eclipse.org/efxclipse/runtime-released/1.2.0/site_assembly.zip"
