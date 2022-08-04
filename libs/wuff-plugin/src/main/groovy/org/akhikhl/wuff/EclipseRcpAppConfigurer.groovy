@@ -115,7 +115,7 @@ class EclipseRcpAppConfigurer extends EquinoxAppConfigurer {
       new XmlNodePrinter(new PrintWriter(writer)).print(project[key])
       return writer.toString()
     }
-    return null
+    return ""
   }
 
   @Override
