@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringEscapeUtils
 import org.gradle.api.Project
 import org.gradle.api.artifacts.Configuration
 import org.gradle.api.java.archives.Manifest
+import org.gradle.api.java.archives.internal.DefaultManifest
 import org.gradle.api.tasks.bundling.Jar
 
 /**
@@ -122,9 +123,10 @@ class OsgiBundleConfigurer extends JavaConfigurer {
       doLast {
         // workaround for OsgiManifest bug: it fails, when classesDir does not exist,
         // i.e. when the project contains no java/groovy classes (resources-only project)
-        project.sourceSets.main.output.classesDir.mkdirs()
+        project.sourceSets.main.java.outputDir.mkdirs()
         generatedManifestFile.parentFile.mkdirs()
-        generatedManifestFile.withWriter { createManifest().writeTo it }
+        DefaultManifest m = (DefaultManifest) createManifest();
+        m.writeTo(new FileOutputStream(generatedManifestFile))
       }
     }
   } // configureTask_createOsgiManifest
@@ -369,11 +371,10 @@ class OsgiBundleConfigurer extends JavaConfigurer {
   }
 
   protected Manifest createManifest() {
-
     def m = project.osgiManifest {
       setName project.name
       setVersion project.version.replace('-SNAPSHOT', snapshotQualifier)
-      setClassesDir project.sourceSets.main.output.classesDir
+      setClassesDir project.sourceSets.main.java.outputDir
       setClasspath(project.configurations.runtime - project.configurations.privateLib)
     }
 
@@ -525,7 +526,7 @@ class OsgiBundleConfigurer extends JavaConfigurer {
       props.save(writer)
       return writer.toString()
     }
-    return null
+    return ""
   }
 
   protected final String getPluginXmlString() {
@@ -534,7 +535,7 @@ class OsgiBundleConfigurer extends JavaConfigurer {
       new XmlNodePrinter(new PrintWriter(writer)).print(project.pluginXml)
       return writer.toString()
     }
-    return null
+    return ""
   }
 
   protected void populatePluginCustomization(Map props) {
