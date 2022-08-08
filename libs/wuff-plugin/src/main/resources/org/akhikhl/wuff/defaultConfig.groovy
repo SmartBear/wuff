@@ -488,6 +488,8 @@ wuff {
         eclipseMavenGroup = 'eclipse-4-16'
 
         sources {
+            ////source "${eclipseMirror}/eclipse/eclipse/downloads/drops4/R-4.7/eclipse-SDK-4.7-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}", sourcesOnly: true
+            source "${eclipseMirror}/eclipse/eclipse/downloads/drops4/R-4.16/eclipse-SDK-4.16-${suffix_os[current_os]}${suffix_arch[current_arch]}.${fileExt_os[current_os]}", sourcesOnly: true
             source "${eclipseMirror}/eclipse/eclipse/downloads/drops4/R-4.16/org.eclipse.platform-4.16.zip"
         }
     }
