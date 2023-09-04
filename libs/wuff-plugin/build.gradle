@@ -1,7 +1,15 @@
 apply from: rootProject.file('libs/common.gradle')
 apply from: rootProject.file('libs/publish.gradle')
 
+repositories {
+  maven {
+    url = uri("https://plugins.gradle.org/m2/")
+  }
+}
+
 dependencies {
+  compile 'biz.aQute.bnd:biz.aQute.bnd.gradle:6.0.0'
+  compile 'com.github.blindpirate.osgi:com.github.blindpirate.osgi.gradle.plugin:0.0.3'
   compile gradleApi()
   compile "org.akhikhl.gradle-onejar:gradle-onejar:$gradle_onejar_version", {
     exclude group: 'org.codehaus.groovy', module: 'groovy-all'

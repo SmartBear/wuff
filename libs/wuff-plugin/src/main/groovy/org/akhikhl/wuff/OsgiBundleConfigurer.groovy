@@ -40,7 +40,7 @@ class OsgiBundleConfigurer extends JavaConfigurer {
   @Override
   protected void applyPlugins() {
     super.applyPlugins()
-    project.apply plugin: 'osgi'
+    project.apply plugin: 'com.github.blindpirate.osgi'
   }
 
   @Override
