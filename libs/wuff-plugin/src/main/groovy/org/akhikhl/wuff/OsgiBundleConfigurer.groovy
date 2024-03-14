@@ -160,10 +160,10 @@ class OsgiBundleConfigurer extends JavaConfigurer {
       from { project.configurations.publicLib }
       from { project.configurations.privateLib }
 
-      def namePart1 = [baseName, appendix].findResults { it ?: null }.join('-')
-      def namePart2 = [version, classifier].findResults { it ?: null }.join('-')
+      def namePart1 = [archiveBaseName, archiveAppendix].findResults { it ?: null }.join('-')
+      def namePart2 = [archiveVersion, archiveClassifier].findResults { it ?: null }.join('-')
       def namePart3 = [namePart1, namePart2].findResults { it ?: null }.join('_')
-      archiveName = [namePart3, extension].findResults { it ?: null }.join('.')
+      archiveFileName = [namePart3, archiveExtension].findResults { it ?: null }.join('.')
 
       buildProperties?.source?.each { sourceName, sourceDir ->
         def sourceSetName = sourceName == '.' ? 'main' : sourceName

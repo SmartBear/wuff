@@ -3,7 +3,7 @@
 
 apply plugin: 'java'
 apply plugin: 'groovy'
-apply plugin: 'maven' // need this for installing artifacts locally
+apply plugin: 'maven-publish' // need this for installing artifacts locally
 
 repositories {
   mavenLocal()
@@ -15,28 +15,28 @@ version = rootProject.version
 
 dependencies {
   if(gradle.gradleVersion.startsWith('1.'))
-    testCompile 'org.codehaus.groovy:groovy-backports-compat23:${gradle_2x_groovy_version}'
-  testCompile "org.spockframework:spock-core:${spock_version}", {
+    testImplementation 'org.codehaus.groovy:groovy-backports-compat23:${gradle_2x_groovy_version}'
+  testImplementation "org.spockframework:spock-core:${spock_version}", {
     exclude group: 'org.codehaus.groovy', module: 'groovy-all'
   }
 }
 
-sourceCompatibility = '1.6'
-targetCompatibility = '1.6'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
 
 // lib projects should be always installed into "$HOME/.m2"
-project.tasks.build.finalizedBy project.tasks.install
+project.tasks.build.finalizedBy project.tasks.publishToMavenLocal
 rootProject.tasks.buildExamples.dependsOn project.tasks.build
-rootProject.tasks.buildExamples.dependsOn project.tasks.install
+rootProject.tasks.buildExamples.dependsOn project.tasks.publishToMavenLocal
 
 task sourcesJar(type: Jar, dependsOn: classes, description: 'Creates sources jar') {
-  classifier = 'sources'
+  archiveClassifier  = 'sources'
   from sourceSets.main.allSource
 }
 
 task javadocJar(type: Jar, description: 'Creates javadoc jar') {
   dependsOn javadoc
-  classifier = 'javadoc'
+  archiveClassifier  = 'javadoc'
   from javadoc.destinationDir
   if(tasks.findByName('groovydoc')) {
     dependsOn groovydoc
