@@ -5,25 +5,26 @@ repositories {
   maven {
     url = uri("https://plugins.gradle.org/m2/")
   }
+  maven { url 'https://nexus.collabdevteam.net/repository/maven-public/' }
 }
 
 dependencies {
-  compile 'biz.aQute.bnd:biz.aQute.bnd.gradle:6.0.0'
-  compile 'com.github.blindpirate.osgi:com.github.blindpirate.osgi.gradle.plugin:0.0.3'
-  compile gradleApi()
-  compile "org.akhikhl.gradle-onejar:gradle-onejar:$gradle_onejar_version", {
+  implementation 'biz.aQute.bnd:biz.aQute.bnd.gradle:6.0.0'
+  implementation 'com.github.blindpirate.osgi:com.github.blindpirate.osgi.gradle.plugin:0.0.5'
+  implementation gradleApi()
+  implementation "org.akhikhl.gradle-onejar:gradle-onejar:$gradle_onejar_version", {
     exclude group: 'org.codehaus.groovy', module: 'groovy-all'
   }
-  compile "org.akhikhl.unpuzzle:unpuzzle-plugin:$unpuzzle_version", {
+  implementation "org.akhikhl.unpuzzle:unpuzzle-plugin:$unpuzzle_version", {
     exclude group: 'org.codehaus.groovy', module: 'groovy-all'
   }
-  compile 'commons-configuration:commons-configuration:1.10'
+  implementation 'commons-configuration:commons-configuration:1.10'
 
   //testCompile group: 'org.gradle', name: 'gradle-tooling-api', version: "$gradleWrapperVersion"
 
-  testCompile 'org.spockframework:spock-core:1.0-groovy-2.4', {
+  testImplementation 'org.spockframework:spock-core:1.0-groovy-2.4', {
 	exclude module : 'groovy-all'
   }
   
-  testCompile gradleTestKit()
+  testImplementation gradleTestKit()
 }

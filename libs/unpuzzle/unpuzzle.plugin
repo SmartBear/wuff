@@ -2,7 +2,8 @@ buildscript {
   repositories {
     mavenLocal()
     jcenter()
-    maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local' }
+    maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local' }
+    maven { url 'https://nexus.collabdevteam.net/repository/maven-public/' }
   }
   
   dependencies {
@@ -13,7 +14,7 @@ buildscript {
 repositories {
   mavenLocal()
   jcenter()
-  maven { url 'http://oss.jfrog.org/artifactory/oss-snapshot-local' }
+  maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local' }
 }
 
 import org.akhikhl.unpuzzle.UnpuzzlePlugin

@@ -181,9 +181,9 @@ class EquinoxProductConfigurer {
       dependsOn PluginUtils.getProductBuildTaskName(product)
       project.tasks.build.dependsOn it
 
-      baseName = project.name
-      classifier = PluginUtils.getProductFileSuffix(product)
-      destinationDir = productOutputDir.parentFile
+      archiveBaseName = project.name
+      archiveClassifier = PluginUtils.getProductFileSuffix(product)
+      destinationDirectory = productOutputDir.parentFile
       if(archiveType == Tar) {
         extension = 'tar.gz'
         compression = Compression.GZIP
