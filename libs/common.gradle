@@ -7,6 +7,7 @@ apply plugin: 'maven-publish' // need this for installing artifacts locally
 
 repositories {
   mavenLocal()
+  mavenCentral()
   jcenter()
 }
 
@@ -19,6 +20,10 @@ dependencies {
   testImplementation "org.spockframework:spock-core:${spock_version}", {
     exclude group: 'org.codehaus.groovy', module: 'groovy-all'
   }
+  implementation "commons-io:commons-io:2.4"
+  implementation "commons-codec:commons-codec:1.9"
+  implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.3.1'
+  implementation "org.akhikhl.unpuzzle:unpuzzle-eclipse2maven:2.0.0"
 }
 
 sourceCompatibility = '1.8'

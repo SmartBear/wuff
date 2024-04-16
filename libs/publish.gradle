@@ -2,6 +2,7 @@
 // apply from: rootProject.file('libs/publish.gradle')
 
 apply plugin: 'maven-publish'
+apply plugin: 'maven'
 apply plugin: 'com.jfrog.artifactory'
 apply plugin: 'com.jfrog.bintray'
 
@@ -47,12 +48,12 @@ publishing {
   }
 }
 
-/*install.repositories.mavenInstaller.pom*.whenConfigured { pom ->
+install.repositories.mavenInstaller.pom*.whenConfigured { pom ->
   pom.project {
     name thisProject.name
     configurePom.rehydrate(delegate, owner, thisObject).call()
   }
-}*/
+}
 
 artifactoryPublish {
   dependsOn { project.tasks.generatePomFileForMavenJavaPublication }
